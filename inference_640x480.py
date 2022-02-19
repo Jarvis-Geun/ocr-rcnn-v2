@@ -33,7 +33,7 @@ if __name__ == '__main__':
     overall_time = 0
     for data in data_list:
       img_path = os.path.join(data_dir, data+'.jpg')
-      image = PIL.Image.open(tf.gfile.GFile(img_path))
+      image = PIL.Image.open(tf.gfile.GFile(img_path, 'rb'))
       # resize to 640x480 with ratio kept
       img_thumbnail = image.thumbnail((640, 480), PIL.Image.ANTIALIAS)
       delta_w, delta_h= 640 - image.size[0], 480 - image.size[1]

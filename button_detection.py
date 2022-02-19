@@ -40,12 +40,13 @@ class ButtonDetector:
     # load frozen graph
     detection_graph = tf.Graph()
     with detection_graph.as_default():
-      od_graph_def = tf.GraphDef()
-      with tf.gfile.GFile(self.graph_path, 'rb') as fid:
+      od_graph_def = tf.compat.v1.GraphDef()
+
+      with tf.io.gfile.GFile(self.graph_path) as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
-    self.session = tf.Session(graph=detection_graph)
+    self.session = tf.compat.v1.Session(graph=detection_graph)
 
     # prepare input and output request
     self.input = detection_graph.get_tensor_by_name('image_tensor:0')

@@ -8,6 +8,25 @@ import tensorflow as tf
 from button_detection import ButtonDetector
 from character_recognition import CharacterRecognizer
 
+##########################################################
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+  try:
+    # Currently, memory growth needs to be the same across GPUs
+    for gpu in gpus:
+      tf.config.experimental.set_memory_growth(gpu, True)
+    logical_gpus = tf.config.experimental.list_logical_devices('GPU')
+    print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+  except RuntimeError as e:
+    # Memory growth must be set before GPUs have been initialized
+    print(e)
+###########################################################
+
+
+
+
+
+
 def button_candidates(boxes, scores, image):
   img_height = image.shape[0]
   img_width = image.shape[1]
@@ -50,7 +69,7 @@ if __name__ == '__main__':
     overall_time = 0
     for data in data_list:
       img_path = os.path.join(data_dir, data+'.jpg')
-      img_np = np.asarray(PIL.Image.open(tf.gfile.GFile(img_path, 'rb')))
+      img_np = np.asarray(PIL.Image.open(tf.io.gfile.GFile(img_path)))
       t0 = cv2.getTickCount()
 
       boxes, scores, _ = detector.predict(img_np, True)
