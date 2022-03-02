@@ -69,7 +69,7 @@ if __name__ == '__main__':
     overall_time = 0
     for data in data_list:
       img_path = os.path.join(data_dir, data+'.jpg')
-      img_np = np.asarray(PIL.Image.open(tf.io.gfile.GFile(img_path)))
+      img_np = np.asarray(PIL.Image.open(tf.io.gfile.GFile(img_path, 'rb')))
       t0 = cv2.getTickCount()
 
       boxes, scores, _ = detector.predict(img_np, True)
@@ -85,6 +85,9 @@ if __name__ == '__main__':
       time = (t1-t0)/cv2.getTickFrequency()
       overall_time += time
       print('Time elapsed: {}'.format(time))
+      #############################################
+      detector.image_show = cv2.resize(detector.image_show, (0, 0), fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
+      #############################################
       cv2.imshow('panels', detector.image_show)
       cv2.waitKey(0)
       #result_show = PIL.Image.fromarray(detector.image_show)
