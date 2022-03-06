@@ -23,10 +23,6 @@ if gpus:
 ###########################################################
 
 
-
-
-
-
 def button_candidates(boxes, scores, image):
   img_height = image.shape[0]
   img_width = image.shape[1]
@@ -85,9 +81,6 @@ if __name__ == '__main__':
       time = (t1-t0)/cv2.getTickFrequency()
       overall_time += time
       print('Time elapsed: {}'.format(time))
-      #############################################
-      detector.image_show = cv2.resize(detector.image_show, (0, 0), fx=0.2, fy=0.2, interpolation=cv2.INTER_AREA)
-      #############################################
       cv2.imshow('panels', detector.image_show)
       cv2.waitKey(0)
       #result_show = PIL.Image.fromarray(detector.image_show)
